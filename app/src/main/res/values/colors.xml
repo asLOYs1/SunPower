@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color texto="amarillo" name="texto">#F7C056</color>
     <color name="white">#FFFFFFFF</color>
+    <color boton="amarillo" name="boton">#F8AC22</color>
+
+
 </resources>
