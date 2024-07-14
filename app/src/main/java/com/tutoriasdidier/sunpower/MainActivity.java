@@ -1,15 +1,9 @@
 package com.tutoriasdidier.sunpower;
 
-import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
+import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import android.content.BroadcastReceiver;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,5 +11,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Temporizador para mostrar la pantalla de splash durante 2 segundos
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(MainActivity.this, login.class);
+                startActivity(intent);
+                finish();
+            }
+        }, 2000); // 2000 milisegundos = 2 segundos
     }
 }

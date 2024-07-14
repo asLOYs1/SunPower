@@ -48,7 +48,6 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextDate2"
         tools:ignore="Autofill,HardcodedText,TextContrastCheck" />
 
-
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
@@ -71,7 +70,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         tools:ignore="HardcodedText" />
 
-
     <Button
         android:id="@+id/button7"
         android:layout_width="174dp"
@@ -84,7 +82,7 @@
         app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="HardcodedText,DuplicateSpeakableTextCheck" />
+        tools:ignore="HardcodedText,DuplicateSpeakableTextCheck,TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/button6"
