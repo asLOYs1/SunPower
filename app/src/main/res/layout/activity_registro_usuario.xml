@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistroUsuario"
-    android:background="@drawable/registro_usuario">
+    tools:context=".RegistroUsuario">
 
     <ImageView
         android:id="@+id/imageView2"
