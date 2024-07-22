@@ -20,7 +20,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
             android:id="@+id/imageView"
@@ -41,46 +42,58 @@
         android:layout_width="174dp"
         android:layout_height="47dp"
         android:text="Atras"
-        app:backgroundTint="@color/boton"
         android:textColor="#051736"
+        app:backgroundTint="@color/boton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.104"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.856"
-        app:strokeColor="#971515" />
+        app:strokeColor="#971515"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/button7"
         android:layout_width="174dp"
         android:layout_height="47dp"
         android:text="Siguiente"
-        app:backgroundTint="@color/boton"
         android:textColor="#051736"
+        app:backgroundTint="@color/boton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.892"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.854" />
+        app:layout_constraintVertical_bias="0.854"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <ImageButton
         android:id="@+id/imageButton2"
-        android:layout_width="0dp"
-        android:layout_height="57dp"
+        android:layout_width="138dp"
+        android:layout_height="54dp"
         android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.119"
         app:srcCompat="@drawable/bot_barra_registrar"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="79dp" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton
         android:id="@+id/imageButton5"
         android:layout_width="131dp"
         android:layout_height="55dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.119"
         app:srcCompat="@drawable/bot_barra_monitoreo_selec"
-        tools:layout_editor_absoluteX="280dp"
-        tools:layout_editor_absoluteY="79dp" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/textView"
@@ -89,17 +102,26 @@
         android:background="#FFF8EA"
         android:text="  - Los rayos deberían golpear idealmente los paneles solares perpendicularmente.
         \n  - consejo2"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="150dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.247" />
 
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="142dp"
         android:layout_height="56dp"
         android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.118"
         app:srcCompat="@drawable/bot_barra_estadisticas"
-        tools:layout_editor_absoluteX="138dp"
-        tools:layout_editor_absoluteY="79dp"  />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/textView2"
@@ -108,8 +130,12 @@
         android:background="#FFF8EA"
         android:text="  - Los rayos deberían golpear idealmente los paneles solares perpendicularmente.
         \n  - consejo2"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="293dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.549"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.473" />
 
     <TextView
         android:id="@+id/textView3"
@@ -118,8 +144,12 @@
         android:background="#FFF8EA"
         android:text="  - Los rayos deberían golpear idealmente los paneles solares perpendicularmente.
         \n  - consejo2"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="436dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.702" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

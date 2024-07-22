@@ -14,10 +14,9 @@ public class estadisticas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estadisticas);
-
         Button exitButton = findViewById(R.id.button5);
-        ImageButton registroButton = findViewById(R.id.imageButton9);
-        ImageButton monitoreoButton = findViewById(R.id.imageButton);
+        ImageButton registroButton = findViewById(R.id.imageButton2);
+        ImageButton monitoreoButton = findViewById(R.id.imageButton7);
 
         // Listener para salir a la pantalla de login
         exitButton.setOnClickListener(new View.OnClickListener() {
