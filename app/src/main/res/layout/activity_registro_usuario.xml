@@ -113,9 +113,9 @@
     <Button
         android:id="@+id/button"
         android:layout_width="173dp"
-        android:layout_height="47dp"
-        android:text="Registrarse"
+        android:layout_height="48dp"
         android:backgroundTint="@color/boton"
+        android:text="Registrarse"
         android:textColor="#051736"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
