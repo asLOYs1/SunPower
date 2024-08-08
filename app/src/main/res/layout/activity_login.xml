@@ -32,33 +32,36 @@
 
     <EditText
         android:id="@+id/correo"
-        android:layout_width="176dp"
-        android:layout_height="37dp"
+        android:layout_width="171dp"
+        android:layout_height="46dp"
         android:layout_marginTop="80dp"
         android:backgroundTint="#FBEAC9"
         android:ems="10"
         android:gravity="center"
         android:hint="Ingrese correo"
         android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/viewlogin"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/editTextText"
-        android:layout_width="176dp"
-        android:layout_height="37dp"
+        android:layout_width="182dp"
+        android:layout_height="43dp"
         android:layout_marginTop="24dp"
         android:ems="10"
         android:gravity="center"
         android:hint="ingrese contraseña"
-        android:inputType="text"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/correo"
+        app:layout_constraintVertical_bias="0.024"
         tools:ignore="TouchTargetSizeCheck" />
 
     <Button
