@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SunPower</string>
+    <string name="kwh">Kwh</string>
 </resources>

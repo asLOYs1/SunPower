@@ -95,19 +95,6 @@
         app:srcCompat="@drawable/bot_barra_monitoreo_selec"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="359dp"
-        android:layout_height="120dp"
-        android:background="#FFF8EA"
-        android:text="  - Los rayos deberían golpear idealmente los paneles solares perpendicularmente.
-        \n  - consejo2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.538"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.247" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -122,34 +109,6 @@
         app:layout_constraintVertical_bias="0.118"
         app:srcCompat="@drawable/bot_barra_estadisticas"
         tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="360dp"
-        android:layout_height="119dp"
-        android:background="#FFF8EA"
-        android:text="  - Los rayos deberían golpear idealmente los paneles solares perpendicularmente.
-        \n  - consejo2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.549"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.473" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="358dp"
-        android:layout_height="119dp"
-        android:background="#FFF8EA"
-        android:text="  - Los rayos deberían golpear idealmente los paneles solares perpendicularmente.
-        \n  - consejo2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.471"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.702" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
