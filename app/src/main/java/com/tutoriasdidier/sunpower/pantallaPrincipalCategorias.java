@@ -1,5 +1,6 @@
 package com.tutoriasdidier.sunpower;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,8 +11,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 public class pantallaPrincipalCategorias extends AppCompatActivity {
 
@@ -25,7 +30,9 @@ public class pantallaPrincipalCategorias extends AppCompatActivity {
     private ImageView terrazaImageView2;
     private ImageView terrazaImageView3;
     private Button ingresarButton;
+    private Button borrarButton;
     private TextView balanceEnergeticoTextView;
+    private String nombreTerraza;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,7 @@ public class pantallaPrincipalCategorias extends AppCompatActivity {
         terrazaImageView2 = findViewById(R.id.imageView5);
         terrazaImageView3 = findViewById(R.id.imageView6);
         ingresarButton = findViewById(R.id.button6);
+        borrarButton = findViewById(R.id.button7);
         balanceEnergeticoTextView = findViewById(R.id.textView10);
 
         // Cargar datos de la terraza si ya están guardados
@@ -60,6 +68,13 @@ public class pantallaPrincipalCategorias extends AppCompatActivity {
                 Terraza terraza = obtenerDatosTerraza();
                 guardarTerraza(terraza);
                 mostrarConfirmacionYActualizarUI(terraza);
+            }
+        });
+        // Listener para borrar la última terraza registrada
+        borrarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                borrarUltimaTerraza();
             }
         });
 
@@ -97,6 +112,83 @@ public class pantallaPrincipalCategorias extends AppCompatActivity {
             }
         });
     }
+    private void borrarUltimaTerraza() {
+        SharedPreferences sharedPreferences = getSharedPreferences("TerrazasData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // Obtener todas las llaves
+        Map<String, ?> allEntries = sharedPreferences.getAll();
+        ArrayList<String> terrazaNames = new ArrayList<>();
+        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            if (entry.getKey().contains("_fecha")) {
+                String terrazaName = entry.getKey().split("_fecha")[0];
+                if (!terrazaNames.contains(terrazaName)) {
+                    terrazaNames.add(terrazaName);
+                }
+            }
+        }
+
+        if (!terrazaNames.isEmpty()) {
+            // Ordenar en orden descendente para borrar el último
+            Collections.sort(terrazaNames, Collections.reverseOrder());
+
+            // Tomar la última terraza
+            String lastTerrazaName = terrazaNames.get(0);
+
+            // Mostrar detalles de la terraza a borrar
+            Terraza terraza = cargarTerraza(lastTerrazaName);
+            if (terraza != null) {
+                mostrarDatosTerraza(terraza);
+                // Confirmar borrado
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Confirmar borrado")
+                        .setMessage("¿Está seguro de que desea borrar la terraza " + lastTerrazaName + "?")
+                        .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Borrar la terraza
+                                editor.remove(lastTerrazaName + "_fecha");
+                                editor.remove(lastTerrazaName + "_energiaProducida");
+                                editor.remove(lastTerrazaName + "_energiaConsumida");
+                                editor.remove(lastTerrazaName + "_numeroPaneles");
+                                editor.apply();
+
+                                // Limpiar la UI
+                                nombreTerrazaEditText.setText("");
+                                fechaProduccionEditText.setText("");
+                                energiaProducidaEditText.setText("");
+                                energiaConsumidaEditText.setText("");
+                                numeroPanelesEditText.setText("");
+                                terrazaImageView1.setVisibility(View.GONE);
+                                terrazaImageView2.setVisibility(View.GONE);
+                                terrazaImageView3.setVisibility(View.GONE);
+                                balanceEnergeticoTextView.setText("kW/h");
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+            } else {
+                // No hay terrazas para borrar
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("No hay terrazas")
+                        .setMessage("No hay terrazas registradas para borrar.")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+            }
+        }
+    }
+
+
 
     private void guardarTerraza(Terraza terraza) {
         SharedPreferences sharedPreferences = getSharedPreferences("TerrazasData", MODE_PRIVATE);
