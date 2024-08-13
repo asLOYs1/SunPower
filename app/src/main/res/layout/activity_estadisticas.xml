@@ -156,8 +156,8 @@
         android:layout_height="33dp"
         android:layout_weight="1"
         android:background="#F7C056"
-        android:hint="Kwh"
         android:gravity="center"
+        android:hint="Kwh"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.989"
@@ -279,6 +279,5 @@
         app:layout_constraintVertical_bias="0.119"
         app:srcCompat="@drawable/bot_barra_monitoreo"
         tools:ignore="TouchTargetSizeCheck" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

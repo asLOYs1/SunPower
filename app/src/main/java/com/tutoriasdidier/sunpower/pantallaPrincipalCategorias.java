@@ -31,12 +31,15 @@
         private Button ingresarButton;
         private Button borrarButton;
         private TextView balanceEnergeticoTextView;
+        private DataManager dataManager;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_pantalla_principal_categorias);
-    
+
+            dataManager = new DataManager(this);
+
             // Inicializar nuevos campos
             nombreTerrazaEditText = findViewById(R.id.editTextText5);
             fechaProduccionEditText = findViewById(R.id.editTextDate2);
@@ -51,20 +54,21 @@
             balanceEnergeticoTextView = findViewById(R.id.textView10);
     
             // Cargar datos de la terraza si ya están guardados
+            // Load terrace data
             String nombreTerraza = nombreTerrazaEditText.getText().toString();
             if (!nombreTerraza.isEmpty()) {
-                Terraza terraza = cargarTerraza(nombreTerraza);
+                Terraza terraza = dataManager.cargarTerraza(nombreTerraza);
                 if (terraza != null) {
                     mostrarDatosTerraza(terraza);
                 }
             }
-    
-            // Listener para guardar los datos al presionar el botón "Ingresar"
+
+
             ingresarButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Terraza terraza = obtenerDatosTerraza();
-                    guardarTerraza(terraza);
+                    dataManager.guardarTerraza(terraza);
                     mostrarConfirmacionYActualizarUI(terraza);
                 }
             });
@@ -116,7 +120,7 @@
     
             // Obtener todas las llaves
             Map<String, ?> allEntries = sharedPreferences.getAll();
-            ArrayList<String> terrazaNames = new ArrayList<>();
+            ArrayList<String> terrazaNames = dataManager.obtenerListaTerrazas();
             for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
                 if (entry.getKey().contains("_fecha")) {
                     String terrazaName = entry.getKey().split("_fecha")[0];
@@ -134,7 +138,7 @@
                 String lastTerrazaName = terrazaNames.get(terrazaNames.size() - 1);
     
                 // Mostrar detalles de la terraza a borrar
-                Terraza terraza = cargarTerraza(lastTerrazaName);
+                Terraza terraza = dataManager.cargarTerraza(lastTerrazaName);
                 if (terraza != null) {
                     mostrarDatosTerraza(terraza);
                     // Confirmar borrado
@@ -144,6 +148,7 @@
                             .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    dataManager.borrarTerraza(lastTerrazaName);
                                     // Borrar la terraza
                                     editor.remove(lastTerrazaName + "_fecha");
                                     editor.remove(lastTerrazaName + "_energiaProducida");
@@ -161,6 +166,7 @@
                                     terrazaImageView2.setVisibility(View.GONE);
                                     terrazaImageView3.setVisibility(View.GONE);
                                     balanceEnergeticoTextView.setText("kW/h");
+                                    limpiarUI();
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -184,6 +190,18 @@
                             .show();
                 }
             }
+        }
+
+        private void limpiarUI() {
+            nombreTerrazaEditText.setText("");
+            fechaProduccionEditText.setText("");
+            energiaProducidaEditText.setText("");
+            energiaConsumidaEditText.setText("");
+            numeroPanelesEditText.setText("");
+            terrazaImageView1.setVisibility(View.GONE);
+            terrazaImageView2.setVisibility(View.GONE);
+            terrazaImageView3.setVisibility(View.GONE);
+            balanceEnergeticoTextView.setText("kW/h");
         }
 
         private void guardarTerraza(Terraza terraza) {
