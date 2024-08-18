@@ -2,10 +2,10 @@ package com.tutoriasdidier.sunpower;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -40,11 +40,7 @@ public class estadisticas extends AppCompatActivity {
         TextView tvEnergia = findViewById(R.id.Tv_energiados);
         TextView tvImpacto = findViewById(R.id.Tv_impactodos);
         TextView tvPorcentaje = findViewById(R.id.Tv_porcentajedos);
-        //TextView tvDias = findViewById(R.id.Tv_diasdos);
-        TextView tvConsumoSemanal = findViewById(R.id.Tv_diasdos);
-        TextView tvProduccionSemanal = findViewById(R.id.Tv_diasdos);
         TextView tvDias = findViewById(R.id.Tv_producciondos);
-
 
         // Obtener los datos de las terrazas registradas
         List<Terraza> terrazas = obtenerDatosDeLasTerrazas();
@@ -52,8 +48,6 @@ public class estadisticas extends AppCompatActivity {
         // Instanciar DataManager
         DataManager dataManager = new DataManager(this);
         fechasDiasInferiores = new StringBuilder();
-
-
 
         // Calcular los valores basados en las terrazas registradas
         for (Terraza terraza : terrazas) {
@@ -63,9 +57,6 @@ public class estadisticas extends AppCompatActivity {
             energiaObtenida += terraza.getEnergiaProducida();
             impactoAmbiental += calcularImpactoAmbiental(terraza.getEnergiaProducida());
             porcentajeEnergiaSolar += calcularPorcentajeEnergiaSolar(terraza);
-            if (esProduccionInferiorAlPromedio(terraza)) {
-                diasInferiores++;
-            }
         }
 
         // Calcular los valores semanales y las fechas con producción inferior al promedio
@@ -81,58 +72,32 @@ public class estadisticas extends AppCompatActivity {
             }
         }
 
-        // Asignar los valores semanales calculados a los TextView
-        tvConsumoSemanal.setText(String.format("%.2f kWh", consumoTotalSemanal));
-        tvProduccionSemanal.setText(String.format("%.2f kWh", produccionTotalSemanal));
-        tvDias.setText(fechasDiasInferiores.length() > 0 ? fechasDiasInferiores.toString() : "Ningún día inferior al promedio");
-
-        // Calcular los valores semanales basados en las terrazas registradas
-        for (Terraza terraza : terrazas) {
-            produccionTotalSemanal += dataManager.calcularEnergiaSemanal(terraza.getNombre(), true);
-            consumoTotalSemanal += dataManager.calcularEnergiaSemanal(terraza.getNombre(), false);
-        }
-
-        // Asignar los valores semanales calculados a los TextView
-        tvConsumoSemanal.setText(String.format("%.2f kWh", consumoTotalSemanal));
-        tvProduccionSemanal.setText(String.format("%.2f kWh", produccionTotalSemanal));
-
-
         // Asignar los valores calculados a los TextView
         tvConsumo.setText(String.format("%.2f kWh", consumoTotal));
-        tvProduccionSemanal.setText(String.format("%.2f kWh", produccionTotal));
         tvNumero.setText(String.valueOf(numeroTerrazas));
         tvEnergia.setText(String.format("%.2f kWh", energiaObtenida));
         tvImpacto.setText(String.format("%.2f kg CO2 ahorrados", impactoAmbiental));
         tvPorcentaje.setText(String.format("%.2f %%", porcentajeEnergiaSolar / numeroTerrazas));
-        tvDias.setText(String.valueOf(diasInferiores) + " días");
+        tvDias.setText(fechasDiasInferiores.length() > 0 ? fechasDiasInferiores.toString() : "Ningún día inferior al promedio");
 
         // Listener para salir a la pantalla de login
-        exitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(estadisticas.this, login.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-            }
+        exitButton.setOnClickListener(v -> {
+            Intent intent = new Intent(estadisticas.this, login.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         });
 
         // Listener para ir a la pantalla de registro
-        registroButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(estadisticas.this, pantallaPrincipalCategorias.class);
-                startActivity(intent);
-            }
+        registroButton.setOnClickListener(v -> {
+            Intent intent = new Intent(estadisticas.this, pantallaPrincipalCategorias.class);
+            startActivity(intent);
         });
 
         // Listener para ir a la pantalla de monitoreo
-        monitoreoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(estadisticas.this, consejos.class);
-                startActivity(intent);
-            }
+        monitoreoButton.setOnClickListener(v -> {
+            Intent intent = new Intent(estadisticas.this, consejos.class);
+            startActivity(intent);
         });
     }
 
@@ -162,19 +127,5 @@ public class estadisticas extends AppCompatActivity {
             return 0;
         }
         return (terraza.getEnergiaProducida() / terraza.getEnergiaConsumida()) * 100;
-    }
-
-    // Determinar si la producción es inferior al promedio
-    private boolean esProduccionInferiorAlPromedio(Terraza terraza) {
-        double promedioProduccion = obtenerPromedioProduccion();
-        return terraza.getEnergiaProducida() < promedioProduccion;
-    }
-
-    // Obtener el promedio de producción
-    private double obtenerPromedioProduccion() {
-        if (numeroTerrazas == 0) {
-            return 0;
-        }
-        return produccionTotal / numeroTerrazas;
     }
 }

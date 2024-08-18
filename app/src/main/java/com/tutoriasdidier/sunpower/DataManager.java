@@ -10,39 +10,50 @@ import java.util.Map;
 
 public class DataManager {
     private static final String PREFS_NAME = "TerrazaPrefs";
-    private static final String KEY_TERRAZAS = "terrazas";
-    private static SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
     public DataManager(Context context) {
-        this.sharedPreferences = context.getSharedPreferences("TerrazasData", Context.MODE_PRIVATE);
+        this.sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences("terraceData", Context.MODE_PRIVATE);
+
     }
 
-    // Método para calcular la energía producida o consumida en la última semana
+    public List<Terraza> getTerraceData() {
+        List<Terraza> terrazas = new ArrayList<>();
+        ArrayList<String> terraceNames = obtenerListaTerrazas(); // Get sorted terrace names
+
+        for (String terraceName : terraceNames) {
+            Terraza terraza = cargarTerraza(terraceName);
+            if (terraza != null) {
+                terrazas.add(terraza);
+            }
+        }
+
+        return terrazas;
+    }
+
     public double calcularEnergiaSemanal(String nombreTerraza, boolean esProduccion) {
         double energiaSemanal = 0.0;
 
-        for (int i = 0; i < 7; i++) { // Suponiendo que los datos diarios están guardados
+        for (int i = 0; i < 7; i++) {
             String key = nombreTerraza + "_dia" + i + (esProduccion ? "_energiaProducida" : "_energiaConsumida");
-            energiaSemanal += sharedPreferences.getFloat(key, 0); // Obtiene el valor de cada día
+            energiaSemanal += sharedPreferences.getFloat(key, 0f);
         }
 
-        return energiaSemanal; // Devuelve el total semanal
+        return energiaSemanal;
     }
 
-    // Método para calcular el promedio de producción semanal
     public double obtenerPromedioProduccionSemanal(String nombreTerraza) {
         double totalProduccion = 0.0;
-        int diasRegistrados = 7; // Suponiendo que tenemos datos para 7 días
 
-        for (int i = 0; i < diasRegistrados; i++) {
+        for (int i = 0; i < 7; i++) {
             String key = nombreTerraza + "_dia" + i + "_energiaProducida";
-            totalProduccion += sharedPreferences.getFloat(key, 0);
+            totalProduccion += sharedPreferences.getFloat(key, 0f);
         }
 
-        return totalProduccion / diasRegistrados; // Promedio de producción semanal
+        return totalProduccion / 7; // Promedio de producción semanal
     }
 
-    // Método para obtener las fechas de los días con producción inferior al promedio
     public List<String> obtenerDiasInferioresAlPromedio(String nombreTerraza, double promedio) {
         List<String> diasInferiores = new ArrayList<>();
 
@@ -50,16 +61,17 @@ public class DataManager {
             String energiaKey = nombreTerraza + "_dia" + i + "_energiaProducida";
             String fechaKey = nombreTerraza + "_dia" + i + "_fecha";
 
-            double energiaProducida = sharedPreferences.getFloat(energiaKey, 0);
+            double energiaProducida = sharedPreferences.getFloat(energiaKey, 0f);
             String fecha = sharedPreferences.getString(fechaKey, "Fecha desconocida");
 
             if (energiaProducida < promedio) {
-                diasInferiores.add(fecha); // Agrega la fecha si la producción es inferior al promedio
+                diasInferiores.add(fecha);
             }
         }
 
         return diasInferiores;
     }
+
     public void guardarTerraza(Terraza terraza) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(terraza.getNombre() + "_fecha", terraza.getFechaProduccion());
@@ -69,17 +81,16 @@ public class DataManager {
         editor.apply();
     }
 
-    public static Terraza cargarTerraza(String nombre) {
+    public Terraza cargarTerraza(String nombre) {
         String fechaProduccion = sharedPreferences.getString(nombre + "_fecha", "");
-        double energiaProducida = sharedPreferences.getFloat(nombre + "_energiaProducida", 0);
-        double energiaConsumida = sharedPreferences.getFloat(nombre + "_energiaConsumida", 0);
+        double energiaProducida = sharedPreferences.getFloat(nombre + "_energiaProducida", 0f);
+        double energiaConsumida = sharedPreferences.getFloat(nombre + "_energiaConsumida", 0f);
         int numeroPaneles = sharedPreferences.getInt(nombre + "_numeroPaneles", 0);
 
         if (!fechaProduccion.isEmpty()) {
             return new Terraza(nombre, fechaProduccion, energiaProducida, energiaConsumida, numeroPaneles);
-        } else {
-            return null;
         }
+        return null;
     }
 
     public void borrarTerraza(String nombre) {
@@ -91,25 +102,38 @@ public class DataManager {
         editor.apply();
     }
 
-    //Método para obtener todas las terrazas
-    public static List<Terraza> obtenerTodasLasTerrazas(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("TerrazaPrefs", Context.MODE_PRIVATE);
+    public int obtenerNumeroDeTerrazas() {
+        ArrayList<String> terrazaNames = new ArrayList<>();
+        Map<String, ?> allEntries = sharedPreferences.getAll();
+        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            if (entry.getKey().contains("_fecha")) {
+                String terrazaName = entry.getKey().split("_fecha")[0];
+                if (!terrazaNames.contains(terrazaName)) {
+                    terrazaNames.add(terrazaName);
+                }
+            }
+        }
+        return terrazaNames.size();
+    }
+
+    public List<Terraza> obtenerTodasLasTerrazas() {
         List<Terraza> terrazas = new ArrayList<>();
         Map<String, ?> allEntries = sharedPreferences.getAll();
         for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            // Suponiendo que la clave es el nombre de la terraza
-            String nombre = entry.getKey();
-            Terraza terraza = cargarTerraza(nombre);
-            if (terraza != null) {
-                terrazas.add(terraza);
+            String nombre = entry.getKey().split("_")[0];
+            if (!terrazas.contains(nombre)) {
+                Terraza terraza = cargarTerraza(nombre);
+                if (terraza != null) {
+                    terrazas.add(terraza);
+                }
             }
         }
         return terrazas;
     }
 
     public ArrayList<String> obtenerListaTerrazas() {
-        Map<String, ?> allEntries = sharedPreferences.getAll();
         ArrayList<String> terrazaNames = new ArrayList<>();
+        Map<String, ?> allEntries = sharedPreferences.getAll();
         for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
             if (entry.getKey().contains("_fecha")) {
                 String terrazaName = entry.getKey().split("_fecha")[0];
@@ -121,19 +145,5 @@ public class DataManager {
         Collections.sort(terrazaNames);
         return terrazaNames;
     }
-    //Método para obtener todas las terrazas
-    /*public static List<Terraza> obtenerTodasLasTerrazas(Context context) {
-        DataManager dataManager = new DataManager(context);
-        ArrayList<String> terrazaNames = dataManager.obtenerListaTerrazas();
-        List<Terraza> terrazas = new ArrayList<>();
-
-        for (String nombre : terrazaNames) {
-            Terraza terraza = dataManager.cargarTerraza(nombre);
-            if (terraza != null) {
-                terrazas.add(terraza);
-            }
-        }
-        return terrazas;
-    }*/
-
 }
+
