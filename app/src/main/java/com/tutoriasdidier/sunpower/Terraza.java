@@ -6,6 +6,7 @@ public class Terraza {
     private double energiaProducida; // En kWh
     private double energiaConsumida; // En kWh
     private int numeroPaneles;
+    private double balance;
 
     // Constructor
     public Terraza(String nombre, String fechaProduccion, double energiaProducida, double energiaConsumida, int numeroPaneles) {
@@ -14,6 +15,7 @@ public class Terraza {
         this.energiaProducida = energiaProducida;
         this.energiaConsumida = energiaConsumida;
         this.numeroPaneles = numeroPaneles;
+        this.balance = energiaProducida - energiaConsumida;
     }
 
     // Getters y Setters
@@ -34,7 +36,7 @@ public class Terraza {
 
     // Método para calcular el balance energético
     public double calcularBalanceEnergetico() {
-        return energiaProducida - energiaConsumida;
+        return balance;
     }
 }
 

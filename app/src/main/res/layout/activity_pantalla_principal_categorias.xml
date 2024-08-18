@@ -197,7 +197,7 @@
         android:textAlignment="center"
         android:backgroundTint="#F7C056"
         android:ems="10"
-        android:hint="Name"
+        android:hint="kW/h"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText4"

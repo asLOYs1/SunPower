@@ -2,13 +2,16 @@ package com.tutoriasdidier.sunpower;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public class DataManager {
-    private SharedPreferences sharedPreferences;
+    private static final String PREFS_NAME = "TerrazaPrefs";
+    private static final String KEY_TERRAZAS = "terrazas";
+    private static SharedPreferences sharedPreferences;
 
     public DataManager(Context context) {
         this.sharedPreferences = context.getSharedPreferences("TerrazasData", Context.MODE_PRIVATE);
@@ -66,7 +69,7 @@ public class DataManager {
         editor.apply();
     }
 
-    public Terraza cargarTerraza(String nombre) {
+    public static Terraza cargarTerraza(String nombre) {
         String fechaProduccion = sharedPreferences.getString(nombre + "_fecha", "");
         double energiaProducida = sharedPreferences.getFloat(nombre + "_energiaProducida", 0);
         double energiaConsumida = sharedPreferences.getFloat(nombre + "_energiaConsumida", 0);
@@ -77,6 +80,31 @@ public class DataManager {
         } else {
             return null;
         }
+    }
+
+    public void borrarTerraza(String nombre) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(nombre + "_fecha");
+        editor.remove(nombre + "_energiaProducida");
+        editor.remove(nombre + "_energiaConsumida");
+        editor.remove(nombre + "_numeroPaneles");
+        editor.apply();
+    }
+
+    //Método para obtener todas las terrazas
+    public static List<Terraza> obtenerTodasLasTerrazas(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("TerrazaPrefs", Context.MODE_PRIVATE);
+        List<Terraza> terrazas = new ArrayList<>();
+        Map<String, ?> allEntries = sharedPreferences.getAll();
+        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            // Suponiendo que la clave es el nombre de la terraza
+            String nombre = entry.getKey();
+            Terraza terraza = cargarTerraza(nombre);
+            if (terraza != null) {
+                terrazas.add(terraza);
+            }
+        }
+        return terrazas;
     }
 
     public ArrayList<String> obtenerListaTerrazas() {
@@ -93,17 +121,8 @@ public class DataManager {
         Collections.sort(terrazaNames);
         return terrazaNames;
     }
-
-    public void borrarTerraza(String nombre) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(nombre + "_fecha");
-        editor.remove(nombre + "_energiaProducida");
-        editor.remove(nombre + "_energiaConsumida");
-        editor.remove(nombre + "_numeroPaneles");
-        editor.apply();
-    }
     //Método para obtener todas las terrazas
-    public static List<Terraza> obtenerTodasLasTerrazas(Context context) {
+    /*public static List<Terraza> obtenerTodasLasTerrazas(Context context) {
         DataManager dataManager = new DataManager(context);
         ArrayList<String> terrazaNames = dataManager.obtenerListaTerrazas();
         List<Terraza> terrazas = new ArrayList<>();
@@ -115,6 +134,6 @@ public class DataManager {
             }
         }
         return terrazas;
-    }
+    }*/
 
 }

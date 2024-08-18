@@ -46,13 +46,12 @@
         app:backgroundTint="@color/boton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.104"
+        app:layout_constraintHorizontal_bias="0.067"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.856"
+        app:layout_constraintVertical_bias="0.868"
         app:strokeColor="#971515"
         tools:ignore="TouchTargetSizeCheck" />
-
     <Button
         android:id="@+id/button7"
         android:layout_width="174dp"
@@ -62,11 +61,71 @@
         app:backgroundTint="@color/boton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.892"
+        app:layout_constraintHorizontal_bias="0.932"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.854"
+        app:layout_constraintVertical_bias="0.868"
         tools:ignore="TouchTargetSizeCheck" />
+
+
+    <!--crea un espacio flexible entre el título y la tabla, lo que permitirá
+     que tu diseño se ajuste de manera más fluida en diferentes pantallas o
+     configuraciones de orientación.-->
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@id/tableLayoutConsejos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button7" />
+
+    <TableLayout
+        android:id="@+id/tableLayoutConsejos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginTop="20dp"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.217">
+        <!-- Headers de la tabla -->
+        <TableRow>
+
+            <TextView
+                android:background="#EEEEEE"
+                android:padding="10dp"
+                android:text="Nombre Terraza"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <TextView
+                android:background="#EEEEEE"
+                android:padding="10dp"
+                android:text="Producción"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <TextView
+                android:background="#EEEEEE"
+                android:padding="10dp"
+                android:text="Consumo"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <TextView
+                android:background="#EEEEEE"
+                android:padding="10dp"
+                android:text="Balance"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+        </TableRow>
+    </TableLayout>
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -95,7 +154,6 @@
         app:srcCompat="@drawable/bot_barra_monitoreo_selec"
         tools:ignore="SpeakableTextPresentCheck" />
 
-
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="142dp"
@@ -110,5 +168,17 @@
         app:srcCompat="@drawable/bot_barra_estadisticas"
         tools:ignore="SpeakableTextPresentCheck" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="380dp"
+        android:layout_height="60dp"
+        android:text="Consejos"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
